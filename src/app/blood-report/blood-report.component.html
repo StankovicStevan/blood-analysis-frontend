@@ -1,0 +1,58 @@
+<div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h4>Upload Blood Analysis Report</h4>
+      </div>
+      <div class="card-body">
+        <!-- File Upload Section -->
+        <form (ngSubmit)="onSubmit()" #reportForm="ngForm">
+          <div class="form-group">
+            <label for="report">Choose Blood Analysis Report (PDF/Image)</label>
+            <input
+              type="file"
+              class="form-control"
+              id="report"
+              (change)="onFileSelected($event)"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!selectedFile || reportForm.submitted"
+            >
+              Upload and Process
+            </button>
+          </div>
+        </form>
+  
+        <!-- Good and Bad Values Display Section -->
+        <div *ngIf="analysisData" class="mt-4">
+          <h5>Analysis Report</h5>
+  
+          <div *ngIf="analysisData.goodValues.length > 0">
+            <h6>Good Values:</h6>
+            <ul>
+              <li *ngFor="let good of analysisData.goodValues">
+                {{ good.parameter }}: {{ good.value }}
+              </li>
+            </ul>
+          </div>
+  
+          <div *ngIf="analysisData.badValues.length > 0">
+            <h6>Bad Values and Associated Conditions:</h6>
+            <ul>
+              <li *ngFor="let bad of analysisData.badValues">
+                {{ bad.parameter }}: {{ bad.value }} 
+                <span *ngIf="bad.associatedCondition">
+                  - Condition: {{ bad.associatedCondition }}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
